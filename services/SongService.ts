@@ -33,6 +33,9 @@ export async function searchSongs(term: string): Promise<Song[]> {
       title: item.trackName,
       artist: item.artistName,
       audioUrl: item.previewUrl,
-      coverUrl: item.artworkUrl100,
+      coverUrl: item.artworkUrl100.replace(
+        "100x100bb.jpg",
+        "600x600bb.jpg"
+      ),
     }))
 }
