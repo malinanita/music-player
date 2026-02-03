@@ -1,0 +1,1 @@
+export type PlayerStatus = "playing" | "paused" | "stopped"
