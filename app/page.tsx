@@ -1,9 +1,9 @@
 import SearchBar from "@/components/search-bar";
 import SongGrid from "@/components/song-grid";
-import { searchSongs } from "@/services/SongService";
+import { getSongs } from "@/services/song-service";
 
 export default async function Home() {
-  const songs = await searchSongs("Noah Kahan")
+  const songs = await getSongs("Portugal. The Man")
 
   return (
     <>
