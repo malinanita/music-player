@@ -1,5 +1,5 @@
 import { Song } from "@/models/song"
-import SongCard from "./song-card"
+import SongCard from "./SongCard"
 
 export default function SongGrid( { songs }: { songs: Song[] } ) {
   return (
