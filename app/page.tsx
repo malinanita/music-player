@@ -1,3 +1,13 @@
+/**
+ * Server component for the home page.
+ *
+ * - Fetches songs from the iTunes API (via song-service).
+ * - Passes the data to the MusicPlayer client component.
+ *
+ * This component is responsible only for data fetching,
+ * not UI interaction or state management.
+ */
+
 import SearchBar from "@/components/SearchBar";
 import { getSongs } from "@/services/song-service";
 import MusicPlayer from "@/components/MusicPlayer";

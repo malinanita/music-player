@@ -32,7 +32,7 @@ export default function MusicPlayer({ songs }: MusicPlayerProps) {
       <SongGrid
         songs={songs}
         currentSong={currentSong}
-        onCurrentSong={setCurrentSong}
+        setCurrentSong={setCurrentSong}
       />
 
       <BottomBar

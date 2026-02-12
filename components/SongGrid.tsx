@@ -15,10 +15,10 @@ import SongCard from "./SongCard"
 interface SongGridProps {
   songs: Song[];
   currentSong?: Song | null;
-  onCurrentSong?: (song: Song) => void;
+  setCurrentSong?: (song: Song) => void;
 }
 
-export default function SongGrid({ songs, currentSong, onCurrentSong }: SongGridProps) {
+export default function SongGrid({ songs, currentSong, setCurrentSong }: SongGridProps) {
 
   return (
     <section>
@@ -28,7 +28,7 @@ export default function SongGrid({ songs, currentSong, onCurrentSong }: SongGrid
             <SongCard 
               song= { song }
               isCurrent={currentSong?.id === song.id}
-              onCurrent={() => onCurrentSong?.(song)}
+              setThisCurrentSong={() => setCurrentSong?.(song)}
             />
           </li>
         ))}

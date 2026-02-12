@@ -15,13 +15,13 @@ import { Song } from "@/models/song"
 interface SongCardProps {
   song: Song;
   isCurrent?: boolean;
-  onCurrent?: () => void;
+  setThisCurrentSong?: () => void;
 }
 
-export default function SongCard( { song, isCurrent, onCurrent }: SongCardProps) {
+export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongCardProps) {
   return (
     <div
-      onClick={onCurrent}
+      onClick={setThisCurrentSong}
       className={`p-4 rounded cursor-pointer transition
         ${isCurrent ? "bg-zinc-900 border-3 border-yellow-700" : "bg-zinc-800 hover:bg-zinc-700"}
       `}
