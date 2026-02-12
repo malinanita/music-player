@@ -1,3 +1,14 @@
+/**
+ * Displays a grid/list of songs.
+ *
+ * - Receives songs from parent component.
+ * - Highlights the currently selected song.
+ * - Notifies parent when a song is selected.
+ *
+ * This component is only presentational and does not
+ * manage its own state.
+ */
+
 import { Song } from "@/models/song"
 import SongCard from "./SongCard"
 
