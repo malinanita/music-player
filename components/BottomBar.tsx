@@ -4,9 +4,17 @@ import { Play, Pause, SkipBack, SkipForward } from "lucide-react"
 
 interface BottomBarProps {
   song: Song | null;
+  isPlaying: boolean
+  onPlay: () => void
+  onPause: () => void
 }
 
-export default function BottomBar({ song }: BottomBarProps) {
+export default function BottomBar({
+  song,
+  isPlaying,
+  onPlay,
+  onPause
+}: BottomBarProps) {
   if (!song) return null;
 
   return (
@@ -30,8 +38,10 @@ export default function BottomBar({ song }: BottomBarProps) {
       {/* Center: controls */}
       <div className="flex gap-6 text-xl">
         <button><SkipBack size={20} /></button>
-        <button className="bg-white text-black p-3 rounded-full"><Play size={20} /></button>
-        <button><SkipForward size={20} /></button>
+      <button onClick={isPlaying ? onPause : onPlay}>
+        {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+      </button>        
+      <button><SkipForward size={20} /></button>
       </div>
 
       {/* Right: placeholder */}

@@ -1,11 +1,20 @@
 import Image from "next/image"
 import { Song } from "@/models/song"
 
-export default function SongCard( { song }: { song: Song }) {
+interface SongCardProps {
+  song: Song;
+  isCurrent?: boolean;
+  onCurrent?: () => void;
+}
+
+export default function SongCard( { song, isCurrent, onCurrent }: SongCardProps) {
   return (
-    <article key={song.id}>
-      <h2 className="font-bold">{song.title}</h2>
-      <p>{song.artist}</p>
+    <div
+      onClick={onCurrent}
+      className={`p-4 rounded cursor-pointer transition
+        ${isCurrent ? "bg-zinc-900 border-3 border-yellow-700" : "bg-zinc-800 hover:bg-zinc-700"}
+      `}
+    >
       <Image 
         src={song.coverUrl ?? "/images/placeholder.jpg"} 
         alt=""
@@ -13,6 +22,9 @@ export default function SongCard( { song }: { song: Song }) {
         height={300}
         className="w-80 h-80 object-cover"
       />
-    </article>
+      <p>{song.title}</p>
+      <p className="text-sm text-zinc-400">{song.artist}</p>
+    </div>
   )
+   
 }
