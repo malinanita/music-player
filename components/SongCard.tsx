@@ -1,3 +1,14 @@
+/**
+ * Presentational component that displays a single song.
+ *
+ * - Renders the song's cover image, title and artist.
+ * - Visually indicates whether the song is currently selected.
+ * - Notifies the parent component when clicked.
+ *
+ * Doesn't manage any state.
+ * Selection state is controlled by the parent (MusicPlayer).
+ */
+
 import Image from "next/image"
 import { Song } from "@/models/song"
 

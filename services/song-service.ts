@@ -1,17 +1,20 @@
+/**
+ * Service layer responsible for fetching and transforming song data
+ * from the external iTunes Search API.
+ *
+ * - Sends a request to the iTunes API.
+ * - Validates the response.
+ * - Maps external API data to the internal Song model.
+ *
+ * Isolates external data structure from the rest of the app -
+ * making sure the UI only works with the app's own Song type.
+ */
+
 import type { Song } from "@/models/song"
 
 /**
-* Shape of the full response returned by the iTunes Search API.
-* We only care about the `results` array.
-*/
-type ItunesSearchResponse = {
-  results: ItunesSong[]
-}
-
-/**
 * Raw song object as returned by the iTunes API.
-* This represents external data before it is mapped
-* to the app's internal Song model.
+* Represents external data before it is mapped to the app's internal Song model.
 */
 type ItunesSong = {
   trackId: number
@@ -22,7 +25,15 @@ type ItunesSong = {
 }
 
 /**
-* Fetches songs from the iTunes Search API based on a search term.
+* Shape of the full response returned by the iTunes Search API.
+* We only care about the `results` array.
+*/
+type ItunesSearchResponse = {
+  results: ItunesSong[]
+}
+
+/**
+* Fetches songs from the iTunes Search API based on a search term (currently hardcoded).
 * The external API data is mapped to the internal `Song` model
 * used throughout the application.
 */
@@ -30,9 +41,7 @@ export async function getSongs(term: string): Promise<Song[]> {
 
   // Send a request to the iTunes Search API using the provided search term
   const response = await fetch(
-    `https://itunes.apple.com/search?term=${
-      term
-    }&entity=song&limit=8`
+    `https://itunes.apple.com/search?term=${term}&entity=song&limit=8`
   )
 
   // Throw an error if the request fails

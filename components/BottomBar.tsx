@@ -1,3 +1,14 @@
+/**
+ * Fixed bottom player UI.
+ *
+ * - Displays information about the selected song.
+ * - Shows album cover, title and artist.
+ * - Renders control buttons (play, pause, skip).
+ *
+ * The component is rendered only when a song is selected.
+ * Audio logic is handled separately.
+ */
+
 import { Song } from "@/models/song"
 import Image from "next/image"
 import { Play, Pause, SkipBack, SkipForward } from "lucide-react"
