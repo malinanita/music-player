@@ -1,20 +1,19 @@
 /**
- * Service layer responsible for fetching and transforming song data
- * from the external iTunes Search API.
+ * SONG SERVICE (Data Layer)
  *
- * - Sends a request to the iTunes API.
- * - Validates the response.
- * - Maps external API data to the internal Song model.
+ * Responsible for:
+ * - Communicating with the external iTunes API.
+ * - Validating the response.
+ * - Converting external data into the internal Song model.
  *
- * Isolates external data structure from the rest of the app -
- * making sure the UI only works with the app's own Song type.
- */
+ * This isolates API structure from the rest of the app.
+*/
 
 import type { Song } from "@/models/song"
 
 /**
-* Raw song object as returned by the iTunes API.
-* Represents external data before it is mapped to the app's internal Song model.
+* Shape of one song as returned by iTunes API.
+* This is NOT the same as our internal Song type.
 */
 type ItunesSong = {
   trackId: number
@@ -24,36 +23,30 @@ type ItunesSong = {
   artworkUrl100: string
 }
 
-/**
-* Shape of the full response returned by the iTunes Search API.
-* We only care about the `results` array.
-*/
+// Full API response structure. We only care about the "results" array.
 type ItunesSearchResponse = {
   results: ItunesSong[]
 }
 
-/**
-* Fetches songs from the iTunes Search API based on a search term (currently hardcoded).
-* The external API data is mapped to the internal `Song` model
-* used throughout the application.
-*/
+
 export async function getSongs(term: string): Promise<Song[]> {
 
-  // Send a request to the iTunes Search API using the provided search term
+  // Send request to the iTunes Search API using the provided search term
   const response = await fetch(
     `https://itunes.apple.com/search?term=${term}&entity=song&limit=8`
   )
 
-  // Throw an error if the request fails
   if (!response.ok) {
     throw new Error("Failed to fetch songs from iTunes API")
   }
 
   // Parse the JSON response
   const data: ItunesSearchResponse = await response.json()
-  //console.log(data.results[0])
 
-  // Map the raw iTunes data to the internal Song interface
+  /** 
+   * Transform external API data into internal Song structure used in the UI
+   * by mapping the raw iTunes data to the internal Song interface
+  */
   return data.results
     .map((item) => ({
       id: String(item.trackId),

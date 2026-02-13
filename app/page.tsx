@@ -1,12 +1,17 @@
 /**
- * Server component for the home page.
- *
- * - Fetches songs from the iTunes API (via song-service).
- * - Passes the data to the MusicPlayer client component.
- *
- * This component is responsible only for data fetching,
- * not UI interaction or state management.
- */
+* HOME PAGE (Server Component)
+*
+* Flow:
+* 1. Reads the current search term from the URL.
+* 2. Fetches matching songs from the iTunes API.
+* 3. Sends the fetched songs to the client-side MusicPlayer.
+*
+* This component:
+* - Does NOT use useState.
+* - Does NOT handle UI interaction.
+* - Only handles navigation state + data fetching.
+* 
+*/
 
 import SearchBar from "@/components/SearchBar";
 import { getSongs } from "@/services/song-service";
@@ -20,9 +25,9 @@ type PageProps = {
 
 export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams
-  const term = params.term || "Portugal. The Man"
+  const term = params.term || ""
 
-  console.log("Search term:", term)
+  //console.log("Search term:", term)
 
   const songs = await getSongs(term)
 

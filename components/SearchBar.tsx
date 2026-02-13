@@ -1,3 +1,15 @@
+/**
+ * SEARCH BAR (Server Component)
+ *
+ * - Updates the URL using a GET request.
+ * - Does NOT manage state.
+ * - Does NOT fetch data.
+ *
+ * When submitted:
+ * → The browser updates the URL with ?term=value
+ * → Next.js re-renders page.tsx on the server
+ */
+
 interface SearchBarProps {
   defaultValue?: string
 }
@@ -5,8 +17,8 @@ interface SearchBarProps {
 export default function SearchBar({ defaultValue }: SearchBarProps) {
   return (
     <form
-      action="/"
-      method="GET"
+      action="/"       /* Submit to homepage */
+      method="GET"         /* Use URL query parameters */
       className="max-w-md mx-auto py-7 mb-10"
     >
       <label htmlFor="term" className="sr-only">
@@ -15,7 +27,7 @@ export default function SearchBar({ defaultValue }: SearchBarProps) {
 
       <input
         id="term"
-        name="term"
+        name="term"    /* IMPORTANT: becomes ?term=value in URL */
         type="text"
         defaultValue={defaultValue}
         placeholder="Search for songs or artists…"
