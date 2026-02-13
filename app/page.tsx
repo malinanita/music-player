@@ -12,19 +12,29 @@ import SearchBar from "@/components/SearchBar";
 import { getSongs } from "@/services/song-service";
 import MusicPlayer from "@/components/MusicPlayer";
 
-export default async function Home() {
-  const songs = await getSongs("Portugal. The Man")
+type PageProps = {
+  searchParams: Promise<{
+    term?: string
+  }>
+}
+
+export default async function Home({ searchParams }: PageProps) {
+  const params = await searchParams
+  const term = params.term || "Portugal. The Man"
+
+  console.log("Search term:", term)
+
+  const songs = await getSongs(term)
 
   return (
     <>
       <header className="px-13 bg-[#1d1d1d]">
-        <SearchBar />
+        <SearchBar defaultValue={term} />
       </header>
 
-      <main className="px-13 py-5">
-        <MusicPlayer songs= { songs }/>
+      <main className="px-13 py-5 pb-28">
+        <MusicPlayer songs={songs} />
       </main>
-
     </>
-  );
+  )
 }
