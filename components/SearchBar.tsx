@@ -19,7 +19,7 @@ export default function SearchBar({ defaultValue }: SearchBarProps) {
     <form
       action="/"       /* Submit to homepage */
       method="GET"         /* Use URL query parameters */
-      className="max-w-md mx-auto py-7 mb-10"
+      className="max-w-md mx-auto py-7 mb-10 flex items-stretch gap-2"
     >
       <label htmlFor="term" className="sr-only">
         Search songs
@@ -29,10 +29,17 @@ export default function SearchBar({ defaultValue }: SearchBarProps) {
         id="term"
         name="term"    /* IMPORTANT: becomes ?term=value in URL */
         type="text"
-        defaultValue={defaultValue}
+        defaultValue={defaultValue}    /* Reflects current search */
         placeholder="Search for songs or artists…"
-        className="w-full rounded-xl border px-4 py-2 text-lg"
+        className="flex-1 w-full rounded-xl border px-4 py-2 text-[14px] focus:outline-none focus:border-yellow-700"
       />
+
+      <button 
+        type="submit" 
+        className="rounded-xl bg-black px-5 py-2 text-white font-medium hover:bg-zinc-800 transition"
+      > 
+        Search
+      </button>
     </form>
   )
 }
