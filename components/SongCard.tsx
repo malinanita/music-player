@@ -23,7 +23,7 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
     <div
       onClick={setThisCurrentSong}
       className={`p-4 rounded cursor-pointer transition
-        ${isCurrent ? "bg-zinc-900 border-3 border-yellow-700" : "bg-zinc-800 hover:bg-zinc-700"}
+        ${isCurrent ? "bg-zinc-900 border-3 border-yellow-700" : "bg-zinc-700 hover:bg-zinc-700"}
       `}
     >
       <Image 
@@ -33,7 +33,7 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
         height={300}
         className="w-80 h-80 object-cover"
       />
-      <p>{song.title}</p>
+      <p className="py-1">{song.title}</p>
       <p className="text-sm text-zinc-400">{song.artist}</p>
     </div>
   )
