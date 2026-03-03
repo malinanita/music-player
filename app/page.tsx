@@ -33,7 +33,7 @@ export default async function Home({ searchParams }: PageProps) {
 
   return (
     <>
-      <header className="px-13 bg-[#1d1d1d]">
+      <header className="px-13">
         <SearchBar defaultValue={term} />
       </header>
 

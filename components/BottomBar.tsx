@@ -6,7 +6,7 @@
  * - Renders control buttons (play, pause, skip).
  *
  * The component is rendered only when a song is selected.
- * Audio logic is handled separately.
+ * Audio playback logic is handled separately.
  */
 
 import { Song } from "@/models/song"
@@ -29,7 +29,7 @@ export default function BottomBar({
   if (!song) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#181818] border-t border-zinc-700 p-4 flex items-center justify-between">
+    <div className="fixed bottom-0 left-0 right-0 bg-[#7D5A50] border-t border-zinc-700 p-4 flex items-center justify-between">
       
       {/* Left: song info */}
       <div className="flex items-center gap-4">
@@ -47,12 +47,12 @@ export default function BottomBar({
       </div>
 
       {/* Center: controls */}
-      <div className="flex gap-6 text-xl">
-        <button><SkipBack size={20} /></button>
-      <button onClick={isPlaying ? onPause : onPlay}>
-        {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+      <div className="flex items-center justify-center gap-6 text-xl">
+        <button className="bg-[#D6771F] w-10 h-10 flex items-center justify-center rounded-full"><SkipBack size={20} /></button>
+      <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] w-15 h-15 flex items-center justify-center rounded-full">
+        {isPlaying ? <Pause size={30} /> : <Play size={30} />}
       </button>        
-      <button><SkipForward size={20} /></button>
+      <button className="bg-[#D6771F] w-10 h-10 flex items-center justify-center rounded-full"><SkipForward size={20} /></button>
       </div>
 
       {/* Right: placeholder */}
