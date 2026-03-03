@@ -29,16 +29,16 @@ export default function BottomBar({
   if (!song) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#7D5A50] border-t border-zinc-700 p-4 flex items-center justify-between">
+    <div className="fixed top-0 left-0 h-screen w-100 flex flex-col justify-start pt-60 items-center bg-[#7D5A50] border-r border-zinc-700 p-6">
       
-      {/* Left: song info */}
-      <div className="flex items-center gap-4">
+      {/* Song info */}
+      <div className="flex flex-col items-center gap-4">
         <Image
           src={song.coverUrl ?? "/images/placeholder.jpg"}
           alt={song.title}
-          width={50}
-          height={50}
-          className="rounded"
+          width={400}
+          height={400}
+          className="rounded-full"
         />
         <div>
           <p className="font-medium">{song.title}</p>
@@ -46,8 +46,8 @@ export default function BottomBar({
         </div>
       </div>
 
-      {/* Center: controls */}
-      <div className="flex items-center justify-center gap-6 text-xl">
+      {/* Controls */}
+      <div className="flex items-center justify-center gap-6 text-xl py-4">
         <button className="bg-[#D6771F] w-10 h-10 flex items-center justify-center rounded-full"><SkipBack size={20} /></button>
       <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] w-15 h-15 flex items-center justify-center rounded-full">
         {isPlaying ? <Pause size={30} /> : <Play size={30} />}

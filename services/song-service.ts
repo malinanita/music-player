@@ -33,7 +33,7 @@ export async function getSongs(term: string): Promise<Song[]> {
 
   // Send request to the iTunes Search API using the provided search term
   const response = await fetch(
-    `https://itunes.apple.com/search?term=${term}&entity=song&limit=8`
+    `https://itunes.apple.com/search?term=${term}&entity=song&limit=6`
   )
 
   if (!response.ok) {

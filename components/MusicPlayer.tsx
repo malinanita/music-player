@@ -28,7 +28,7 @@ export default function MusicPlayer({ songs }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false)
 
   return (
-    <>
+    <div className="ml-100">
       <SongGrid
         songs={songs}
         currentSong={currentSong}
@@ -41,6 +41,6 @@ export default function MusicPlayer({ songs }: MusicPlayerProps) {
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
       />
-    </>
+    </div>
   )
 }
