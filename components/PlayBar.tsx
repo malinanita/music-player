@@ -13,40 +13,50 @@ import { Song } from "@/models/song"
 import Image from "next/image"
 import { Play, Pause, SkipBack, SkipForward } from "lucide-react"
 
-interface BottomBarProps {
+interface PlayBarProps {
   song: Song | null;
   isPlaying: boolean
   onPlay: () => void
   onPause: () => void
 }
 
-export default function BottomBar({
+export default function PlayBar({
   song,
   isPlaying,
   onPlay,
   onPause
-}: BottomBarProps) {
-  if (!song) return null;
+}: PlayBarProps) {
+
+  const coverImage = song
+  ? song.coverUrl ?? "/images/placeholder.jpg"
+  : "/images/placeholder-noplay.png"
 
   return (
     <div className="fixed top-0 left-0 h-screen w-100 flex flex-col justify-start pt-60 items-center bg-[#7D5A50] border-r border-zinc-700 p-6">
-      
+
       {/* Song info */}
       <div className="flex flex-col items-center gap-4">
+
         <Image
-          src={song.coverUrl ?? "/images/placeholder.jpg"}
-          alt={song.title}
+          src={coverImage}
+          alt={song?.title ?? "No song selected"}
           width={400}
           height={400}
           className="rounded-full"
         />
+
         <div>
-          <p className="font-medium">{song.title}</p>
-          <p className="text-sm text-zinc-400">{song.artist}</p>
+          <p className="font-medium">
+            {song?.title ?? "No song selected"}
+          </p>
+
+          <p className="text-sm text-zinc-400">
+            {song?.artist ?? "Select a song to play"}
+          </p>
         </div>
       </div>
 
-      {/* Controls */}
+      {/* Play controls */}
       <div className="flex items-center justify-center gap-6 text-xl py-4">
         <button className="bg-[#D6771F] w-10 h-10 flex items-center justify-center rounded-full"><SkipBack size={20} /></button>
       <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] w-15 h-15 flex items-center justify-center rounded-full">
@@ -55,7 +65,7 @@ export default function BottomBar({
       <button className="bg-[#D6771F] w-10 h-10 flex items-center justify-center rounded-full"><SkipForward size={20} /></button>
       </div>
 
-      {/* Right: placeholder */}
+      {/* Placeholder */}
       <div className="w-[200px]" />
 
     </div>

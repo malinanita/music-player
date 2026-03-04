@@ -15,7 +15,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import BottomBar from "./BottomBar"
+import PlayBar from "./PlayBar"
 import SongGrid from "./SongGrid"
 import { Song } from "@/models/song"
 
@@ -63,7 +63,7 @@ export default function MusicPlayer({ songs }: MusicPlayerProps) {
         setCurrentSong={setCurrentSong}
       />
 
-      <BottomBar
+      <PlayBar
         song={currentSong}
         isPlaying={isPlaying}
         onPlay={() => setIsPlaying(true)}
