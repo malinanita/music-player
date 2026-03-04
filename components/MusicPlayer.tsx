@@ -14,7 +14,7 @@
 
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import BottomBar from "./BottomBar"
 import SongGrid from "./SongGrid"
 import { Song } from "@/models/song"
@@ -26,6 +26,34 @@ interface MusicPlayerProps {
 export default function MusicPlayer({ songs }: MusicPlayerProps) {
   const [currentSong, setCurrentSong] = useState<Song | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  /**
+   * When the selected song changes:
+   * - update the audio source
+   * - start playing automatically
+   */
+  useEffect(() => {
+    if (!audioRef.current || !currentSong) return
+
+    audioRef.current.src = currentSong.audioUrl
+    audioRef.current.play()
+    setIsPlaying(true)
+  }, [currentSong])
+
+  /**
+   * When play/pause state changes:
+   * - control the audio element
+   */
+  useEffect(() => {
+    if (!audioRef.current) return
+
+    if (isPlaying) {
+      audioRef.current.play()
+    } else {
+      audioRef.current.pause()
+    }
+  }, [isPlaying])
 
   return (
     <div className="ml-100">
@@ -41,6 +69,8 @@ export default function MusicPlayer({ songs }: MusicPlayerProps) {
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
       />
+
+      <audio ref={audioRef} />
     </div>
   )
 }
