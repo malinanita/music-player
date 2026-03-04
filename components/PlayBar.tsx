@@ -5,7 +5,6 @@
  * - Shows album cover, title and artist.
  * - Renders control buttons (play, pause, skip).
  *
- * The component is rendered only when a song is selected.
  * Audio playback logic is handled separately.
  */
 

@@ -3,13 +3,15 @@
 *
 * - Stores player state (currentSong, isPlaying).
 * - Handles song selection logic.
+* - Controls audio playback using an HTMLAudioElement.
 * - Passes state and event handlers down to child components.
 *
 * Structure:
 * - SongGrid displays songs and triggers selection.
-* - BottomBar reflects the current player state.
+* - PlayBar reflects the current player state.
 * 
-* Doesn't handle actual audio playback.
+* Audio playback is managed via a ref to an <audio> element and
+* React useEffect hooks that respond to state changes.
 */
 
 "use client"
