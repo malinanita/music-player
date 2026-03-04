@@ -31,9 +31,8 @@ export default function SearchBar({ defaultValue }: SearchBarProps) {
         type="text"
         defaultValue={defaultValue}    /* Reflects current search */
         placeholder="Search for songs or artists…"
-        className="flex-1 w-full rounded-xl px-4 py-2 text-[14px] bg-[#240B0B] focus:outline-none focus:border-yellow-700"
+        className="flex-1 w-full rounded-xl px-4 py-2 text-[14px] bg-[#240B0B] focus:outline-none focus:border border-yellow-700"
       />
-
     </form>
   )
 }

@@ -41,10 +41,10 @@ export default function PlayBar({
           alt={song?.title ?? "No song selected"}
           width={400}
           height={400}
-          className="rounded-full"
+          className="rounded-full border border-8 border-[#6C4A3C]/50"
         />
 
-        <div>
+        <div className="text-center">
           <p className="font-medium">
             {song?.title ?? "No song selected"}
           </p>
