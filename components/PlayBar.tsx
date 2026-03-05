@@ -11,6 +11,7 @@
 import { Song } from "@/models/song"
 import Image from "next/image"
 import { Play, Pause, SkipBack, SkipForward } from "lucide-react"
+import Link from "next/link"
 
 interface PlayBarProps {
   song: Song | null;
@@ -58,14 +59,22 @@ export default function PlayBar({
       {/* Play controls */}
       <div className="flex items-center justify-center gap-6 text-xl py-4">
         <button className="bg-[#D6771F] w-10 h-10 flex items-center justify-center rounded-full"><SkipBack size={20} /></button>
-      <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] w-15 h-15 flex items-center justify-center rounded-full">
-        {isPlaying ? <Pause size={30} /> : <Play size={30} />}
-      </button>        
-      <button className="bg-[#D6771F] w-10 h-10 flex items-center justify-center rounded-full"><SkipForward size={20} /></button>
+        <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] w-15 h-15 flex items-center justify-center rounded-full">
+          {isPlaying ? <Pause size={30} /> : <Play size={30} />}
+        </button>        
+        <button className="bg-[#D6771F] w-10 h-10 flex items-center justify-center rounded-full"><SkipForward size={20} /></button>
       </div>
 
-      {/* Placeholder */}
-      <div className="w-[200px]" />
+      {/* Navigation and theme toggle */}
+      <div className="fixed bottom-0">
+        <div className="flex">
+          <nav className="flex">
+            <Link href="/" className="p-5">Home</Link>
+            <Link href="/liked" className="p-5">Liked Songs</Link>
+          </nav>
+          <button className="p-5 hover:bg-black active:bg-gray-700">Theme</button>
+        </div>
+      </div>
 
     </div>
   )
