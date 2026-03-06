@@ -1,12 +1,22 @@
 /**
- * Fixed bottom player UI.
- *
- * - Displays information about the selected song.
- * - Shows album cover, title and artist.
- * - Renders control buttons (play, pause, skip).
- *
- * Audio playback logic is handled separately.
- */
+* Sidebar player UI component.
+*
+* Responsibilities:
+* - Displays the currently selected song (cover, title, artist).
+* - Renders playback controls (play / pause / skip).
+* - Shows navigation links (Home, Liked Songs) and theme toggle.
+*
+* This component does NOT manage playback logic itself.
+* Instead, it receives all player state and control handlers via props
+* from the MusicPlayer component.
+*
+* Props:
+* - song: the currently selected song (or null if nothing is playing)
+* - isPlaying: indicates whether the audio is currently playing
+* - onPlay / onPause: event handlers that control playback
+*
+* The actual audio element and playback logic live in MusicPlayer.
+*/
 
 import { Song } from "@/models/song"
 import Image from "next/image"

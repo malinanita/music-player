@@ -2,20 +2,21 @@
 * HOME PAGE (Server Component)
 *
 * Flow:
-* 1. Reads the current search term from the URL.
+* 1. Reads the search term from the URL parameters.
 * 2. Fetches matching songs from the iTunes API.
-* 3. Sends the fetched songs to the client-side MusicPlayer.
+* 3. Passes the songs to the SongGrid component for display.
 *
-* This component:
-* - Does NOT use useState.
-* - Does NOT handle UI interaction.
-* - Only handles navigation state + data fetching.
+* This component is responsible only for:
+* - Navigation state
+* - Data fetching
 * 
+* It does not handle playback or interactivity.
+* Song selection and playback are handled by the PlayerProvider and MusicPlayer.
 */
 
 import SearchBar from "@/components/SearchBar";
 import { getSongs } from "@/services/song-service";
-import MusicPlayer from "@/components/MusicPlayer";
+import SongGrid from "@/components/SongGrid";
 
 type PageProps = {
   searchParams: Promise<{
@@ -37,8 +38,8 @@ export default async function Home({ searchParams }: PageProps) {
         <SearchBar defaultValue={term} />
       </header>
 
-      <main className="px-13 py-5 pb-28">
-        <MusicPlayer songs={songs} />
+       <main className="px-13 py-5 pb-28">
+        <SongGrid songs={songs} />
       </main>
     </>
   )

@@ -1,39 +1,34 @@
 /**
 * Client-side control component for the music player.
 *
-* - Stores player state (currentSong, isPlaying).
-* - Handles song selection logic.
-* - Controls audio playback using an HTMLAudioElement.
-* - Passes state and event handlers down to child components.
+* - Reads the currently selected song from the global PlayerProvider context.
+* - Stores playback state locally (isPlaying).
+* - Controls audio playback through an HTMLAudioElement using a ref.
 *
-* Structure:
-* - SongGrid displays songs and triggers selection.
-* - PlayBar reflects the current player state.
+* Behavior:
+* - When currentSong changes, the audio source updates and playback starts automatically.
+* - When isPlaying changes, the audio element plays or pauses accordingly.
 * 
-* Audio playback is managed via a ref to an <audio> element and
-* React useEffect hooks that respond to state changes.
+* This component is rendered in the root layout so that the player
+* persists across page navigation.
 */
 
 "use client"
 
 import { useState, useRef, useEffect } from "react"
 import PlayBar from "./PlayBar"
-import SongGrid from "./SongGrid"
-import { Song } from "@/models/song"
+import { usePlayer } from "@/context/PlayerProvider"
 
-interface MusicPlayerProps {
-  songs: Song[];
-}
 
-export default function MusicPlayer({ songs }: MusicPlayerProps) {
-  const [currentSong, setCurrentSong] = useState<Song | null>(null)
+export default function MusicPlayer() {
+  const { currentSong } = usePlayer()
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   /**
-   * When the selected song changes:
+   * When the selected song from the global player context changes:
    * - update the audio source
-   * - start playing automatically
+   * - start playback automatically
    */
   useEffect(() => {
     if (!audioRef.current || !currentSong) return
@@ -44,8 +39,8 @@ export default function MusicPlayer({ songs }: MusicPlayerProps) {
   }, [currentSong])
 
   /**
-   * When play/pause state changes:
-   * - control the audio element
+   * When the play/pause state changes:
+   * - control playback of the HTMLAudioElement
    */
   useEffect(() => {
     if (!audioRef.current) return
@@ -59,11 +54,6 @@ export default function MusicPlayer({ songs }: MusicPlayerProps) {
 
   return (
     <div className="ml-100">
-      <SongGrid
-        songs={songs}
-        currentSong={currentSong}
-        setCurrentSong={setCurrentSong}
-      />
 
       <PlayBar
         song={currentSong}
