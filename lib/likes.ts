@@ -8,7 +8,7 @@
  * No database or API routes required.
  *
  * Key: songId
- * Value: number of likes
+ * Value: 1 (liked)
 */
 
 const globalForLikes = globalThis as unknown as {
@@ -22,19 +22,25 @@ if (process.env.NODE_ENV !== "production") {
   globalForLikes.likesStore = likesStore;
 }
 
-// Returns the number of likes for a song.
+// Returns 1 if a song is liked, otherwise 0
 export function getLikes(id: string) {
   return likesStore.get(id) || 0;
 }
 
-// Updates the number of likes for a song.
-export function setLikes(id: string, likes: number) {
-  likesStore.set(id, likes);
+export function toggleLike(id: string) {
+  const current = getLikes(id)
+
+  if (current > 0) {
+    likesStore.delete(id)
+    return 0
+  } else {
+    likesStore.set(id, 1)
+    return 1
+  }
 }
 
-// Returns all liked song IDs.
+// Returns all liked song IDs
 export function getLikedSongIds() {
-  return Array.from(likesStore.entries())
-    .filter(([_, likes]) => likes > 0)
-    .map(([id]) => id);
+  return Array.from(likesStore.keys());
 }
+
