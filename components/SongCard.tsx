@@ -1,20 +1,18 @@
 /**
  * Presentational component that displays a single song.
  *
- * - Renders the song's cover image, title and artist.
- * - Visually indicates whether the song is currently selected.
- * - Notifies the parent component when clicked.
- *
- * Doesn't manage any state.
- * Selection state is controlled by the parent (MusicPlayer).
+ * - Renders the song's cover image, title and artist
+ * - Shows if the song is liked
+ * - Allows toggling like
+ * - Notifies parent when clicked
 */
 
 "use client"
 
 import Image from "next/image"
 import { Song } from "@/models/song"
-import { useState } from "react"
-import { getLikes, toggleLike } from "@/lib/likes"
+import { useState, useEffect } from "react"
+import { toggleLikeAction, isLikedAction } from "@/lib/actions"
 
 interface SongCardProps {
   song: Song;
@@ -24,13 +22,29 @@ interface SongCardProps {
 
 export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongCardProps) {
   
-  const [likes, setLikesLocal] = useState(getLikes(song.id))
+  const [liked, setLiked] = useState(false)
 
-  function handleLike(e: React.MouseEvent) {
-    e.stopPropagation() // makes sure song doesn't play
+  /**
+   * When the component mounts,
+   * check if this song is already liked on the server
+   */
+  useEffect(() => {
+    async function checkLiked() {
+      const result = await isLikedAction(song.id)
+      setLiked(result)
+    }
 
-    const newLikes = toggleLike(song.id)
-    setLikesLocal(newLikes)
+    checkLiked()
+  }, [song.id])
+
+  
+  //Toggle like state
+ 
+  async function handleLike(e: React.MouseEvent) {
+    e.stopPropagation()
+
+    const newState = await toggleLikeAction(song)
+    setLiked(newState)
   }
 
   return (
@@ -55,7 +69,7 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
         </div>
 
         <button onClick={handleLike}>
-          {likes > 0 ? "❤️" : "🤍"}
+          {liked ? "❤️" : "🤍"}
         </button>
       </div>
 
