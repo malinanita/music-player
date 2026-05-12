@@ -24,10 +24,7 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
   
   const [liked, setLiked] = useState(false)
 
-  /**
-   * When the component mounts,
-   * check if this song is already liked on the server
-   */
+  //Check if song is already liked
   useEffect(() => {
     async function checkLiked() {
       const result = await isLikedAction(song.id)
@@ -39,7 +36,6 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
 
   
   //Toggle like state
- 
   async function handleLike(e: React.MouseEvent) {
     e.stopPropagation()
 
@@ -75,5 +71,4 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
 
     </div>
   )
-   
 }
