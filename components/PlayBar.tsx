@@ -82,10 +82,10 @@ export default function PlayBar({
       <div className="fixed bottom-0">
         <div className="flex">
           <nav className="flex">
-            <Link href="/" className={`p-4 hover:bg-[#3e261b] active:bg-[#2d1a12] ${pathname === "/" ? "bg-[#674940]" : "bg-[#7D5A50]"}`}>Home</Link>
-            <Link href="/liked" className={`p-4 hover:bg-[#3e261b] active:bg-[#2d1a12] ${pathname === "/liked" ? "bg-[#674940]" : "bg-[#7D5A50]"}`}>Liked Songs</Link>
+            <Link href="/" className={`p-3 hover:bg-[#3e261b] hover:rounded-t-xl active:bg-[#2d1a12] active:rounded-t-xl ${pathname === "/" ? "bg-[#674940] rounded-t-xl" : "bg-[#7D5A50]"}`}>Home</Link>
+            <Link href="/liked" className={`p-3 hover:bg-[#3e261b] hover:rounded-t-xl active:bg-[#2d1a12] active:rounded-t-xl ${pathname === "/liked" ? "bg-[#674940] rounded-t-xl" : "bg-[#7D5A50]"}`}>Liked Songs</Link>
           </nav>
-          <button className="p-4 hover:bg-[#3e261b] active:bg-[#2d1a12]">Theme</button>
+          <button className="p-3 hover:bg-[#3e261b] hover:rounded-t-xl active:bg-[#2d1a12] active:rounded-t-xl">Theme</button>
         </div>
       </div>
 
