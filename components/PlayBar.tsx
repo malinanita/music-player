@@ -79,10 +79,10 @@ export default function PlayBar({
       <div className="fixed bottom-0">
         <div className="flex">
           <nav className="flex">
-            <Link href="/" className="p-4 hover:bg-[#3e261b] active:bg-gray-700">Home</Link>
-            <Link href="/liked" className="p-4 hover:bg-[#3e261b] active:bg-gray-700">Liked Songs</Link>
+            <Link href="/" className="p-4 hover:bg-[#3e261b] active:bg-[#2d1a12]">Home</Link>
+            <Link href="/liked" className="p-4 hover:bg-[#3e261b] active:bg-[#2d1a12]">Liked Songs</Link>
           </nav>
-          <button className="p-4 hover:bg-[#3e261b] active:bg-gray-700">Theme</button>
+          <button className="p-4 hover:bg-[#3e261b] active:bg-[#2d1a12]">Theme</button>
         </div>
       </div>
 
