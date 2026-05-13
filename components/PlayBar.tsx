@@ -22,6 +22,7 @@ import { Song } from "@/models/song"
 import Image from "next/image"
 import { Play, Pause, SkipBack, SkipForward } from "lucide-react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 interface PlayBarProps {
   song: Song | null;
@@ -40,6 +41,8 @@ export default function PlayBar({
   const coverImage = song
   ? song.coverUrl ?? "/images/placeholder.jpg"
   : "/images/placeholder-noplay.png"
+
+  const pathname = usePathname()
 
   return (
     <div className="fixed top-0 left-0 h-screen w-100 flex flex-col justify-start pt-60 items-center bg-[#7D5A50] border-r border-zinc-700 p-6">
@@ -79,8 +82,8 @@ export default function PlayBar({
       <div className="fixed bottom-0">
         <div className="flex">
           <nav className="flex">
-            <Link href="/" className="p-4 hover:bg-[#3e261b] active:bg-[#2d1a12]">Home</Link>
-            <Link href="/liked" className="p-4 hover:bg-[#3e261b] active:bg-[#2d1a12]">Liked Songs</Link>
+            <Link href="/" className={`p-4 hover:bg-[#3e261b] active:bg-[#2d1a12] ${pathname === "/" ? "bg-[#674940]" : "bg-[#7D5A50]"}`}>Home</Link>
+            <Link href="/liked" className={`p-4 hover:bg-[#3e261b] active:bg-[#2d1a12] ${pathname === "/liked" ? "bg-[#674940]" : "bg-[#7D5A50]"}`}>Liked Songs</Link>
           </nav>
           <button className="p-4 hover:bg-[#3e261b] active:bg-[#2d1a12]">Theme</button>
         </div>
