@@ -82,10 +82,10 @@ export default function PlayBar({
       <div className="fixed bottom-0">
         <div className="flex">
           <nav className="flex">
-            <Link href="/" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[#3e261b] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[#2d1a12] active:rounded-t-xl ${pathname === "/" ? "bg-[#674940] rounded-t-xl" : "bg-[#7D5A50]"}`}>Home</Link>
-            <Link href="/liked" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[#3e261b] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[#2d1a12] active:rounded-t-xl ${pathname === "/liked" ? "bg-[#674940] rounded-t-xl" : "bg-[#7D5A50]"}`}>Liked Songs</Link>
+            <Link href="/" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[#3e261b] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[#2d1a12] active:rounded-t-xl active:translate-y-0 ${pathname === "/" ? "bg-[#674940] rounded-t-xl" : "bg-[#7D5A50]"}`}>Home</Link>
+            <Link href="/liked" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[#3e261b] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[#2d1a12] active:rounded-t-xl active:translate-y-0 ${pathname === "/liked" ? "bg-[#674940] rounded-t-xl" : "bg-[#7D5A50]"}`}>Liked Songs</Link>
           </nav>
-          <button className="px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[#3e261b] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[#2d1a12] active:rounded-t-xl">Theme</button>
+          <button className="px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[#3e261b] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[#2d1a12] active:rounded-t-xl active:translate-y-0">Theme</button>
         </div>
       </div>
 
