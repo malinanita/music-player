@@ -3,13 +3,10 @@
 *
 * - Reads the currently selected song from the global PlayerProvider context.
 * - Stores playback state locally (isPlaying).
+* - Restores the last playback position from localStorage.
 * - Controls audio playback through an HTMLAudioElement using a ref.
-*
-* Behavior:
-* - When currentSong changes, the audio source updates and playback starts automatically.
-* - When isPlaying changes, the audio element plays or pauses accordingly.
 * 
-* This component is rendered in the root layout so that the player
+* This component is rendered in the root layout so that the player state
 * persists across page navigation.
 */
 
@@ -24,7 +21,19 @@ export default function MusicPlayer() {
   const { currentSong } = usePlayer()
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [currentTime, setCurrentTime] = useState(0)
 
+  /**
+   * Restore saved playback position from localStorage.
+   */
+  useEffect(() => {
+    const savedTime = localStorage.getItem("current-time")
+
+    if (savedTime) {
+      setCurrentTime(Number(savedTime))
+    }
+  }, [])
+  
   /**
    * When the selected song from the global player context changes:
    * - update the audio source
@@ -52,6 +61,20 @@ export default function MusicPlayer() {
     }
   }, [isPlaying])
 
+  function handleTimeUpdate() {
+    if (!audioRef.current) return
+
+    const time = audioRef.current.currentTime
+    setCurrentTime(time)
+    localStorage.setItem("current-time", String(time))
+  }
+
+  function handleLoadedMetadata() {
+    if (!audioRef.current) return
+
+    audioRef.current.currentTime = currentTime
+  }
+
   return (
     <div className="ml-100">
 
@@ -62,7 +85,11 @@ export default function MusicPlayer() {
         onPause={() => setIsPlaying(false)}
       />
 
-      <audio ref={audioRef} />
+      <audio 
+        ref={audioRef} 
+        onLoadedMetadata={handleLoadedMetadata}
+        onTimeUpdate={handleTimeUpdate}
+      />
     </div>
   )
 }

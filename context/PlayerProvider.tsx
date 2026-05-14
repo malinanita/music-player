@@ -14,7 +14,7 @@
 
 "use client"
 
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 import { Song } from "@/models/song"
 
 type PlayerContextType = {
@@ -25,7 +25,20 @@ type PlayerContextType = {
 const PlayerContext = createContext<PlayerContextType | null>(null)
 
 export function PlayerProvider({ children }: { children: React.ReactNode }) {
-  const [currentSong, setCurrentSong] = useState<Song | null>(null)
+  const [currentSong, setCurrentSongState] = useState<Song | null>(null)
+
+  useEffect(() => {
+    const savedSong = localStorage.getItem("current-song")
+
+    if (savedSong) {
+      setCurrentSongState(JSON.parse(savedSong))
+    }
+  }, [])
+
+  function setCurrentSong(song: Song) {
+    setCurrentSongState(song)
+    localStorage.setItem("current-song", JSON.stringify(song))
+  }
 
   return (
     <PlayerContext.Provider value={{ currentSong, setCurrentSong }}>
