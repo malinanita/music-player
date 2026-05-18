@@ -18,33 +18,21 @@ import { usePlayer } from "@/context/PlayerProvider"
 
 
 export default function MusicPlayer() {
-  const { currentSong } = usePlayer()
+  const { currentSong, shouldRestart } = usePlayer()
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const [currentTime, setCurrentTime] = useState(0)
+  const isRestoringTimeRef = useRef(false)
 
-  /**
-   * Restore saved playback position from localStorage.
-   */
-  useEffect(() => {
-    const savedTime = localStorage.getItem("current-time")
-
-    if (savedTime) {
-      setCurrentTime(Number(savedTime))
-    }
-  }, [])
-  
   /**
    * When the selected song from the global player context changes:
    * - update the audio source
-   * - start playback automatically
+   * - wait for metadata before restoring playback position
    */
   useEffect(() => {
     if (!audioRef.current || !currentSong) return
 
+    isRestoringTimeRef.current = true
     audioRef.current.src = currentSong.audioUrl
-    audioRef.current.play()
-    setIsPlaying(true)
   }, [currentSong])
 
   /**
@@ -62,17 +50,34 @@ export default function MusicPlayer() {
   }, [isPlaying])
 
   function handleTimeUpdate() {
-    if (!audioRef.current) return
+    if (!audioRef.current || isRestoringTimeRef.current) return
 
-    const time = audioRef.current.currentTime
-    setCurrentTime(time)
-    localStorage.setItem("current-time", String(time))
+    localStorage.setItem(
+      "current-time",
+      String(audioRef.current.currentTime)
+    )
   }
 
   function handleLoadedMetadata() {
     if (!audioRef.current) return
 
-    audioRef.current.currentTime = currentTime
+    const savedTime = localStorage.getItem("current-time")
+
+    audioRef.current.currentTime = shouldRestart
+      ? 0
+      : savedTime
+        ? Number(savedTime)
+        : 0
+
+    isRestoringTimeRef.current = false
+
+    audioRef.current.play()
+      .then(() => {
+        setIsPlaying(true)
+      })
+      .catch(() => {
+        setIsPlaying(false)
+      })
   }
 
   return (
