@@ -3,6 +3,31 @@
 :root {
   --background: #38251d;
   --foreground: #ededed;
+
+  --sidebar: #7D5A50;
+  --sidebar-active: #674940;
+  --nav-hover: #3e261b;
+  --nav-active: #2d1a12;
+  --card: #271A14;
+  --current-border: #964901;
+  --border-thick: #6a4b3d;
+  --border-thin: #3e2920;
+  --search-bg: #240B0B;
+}
+
+[data-theme="light"] {
+  --background: #f9ede8;
+  --foreground: #2d1a12;
+
+  --sidebar: #f7e3da;
+  --sidebar-active: #dbbfae;
+  --nav-hover: #c9aa99;
+  --nav-active: #a98b7a;
+  --card: #fffaf7;
+  --current-border: #FFA857;
+  --border-thick: #edd3c7;
+  --border-thin: #edded7;
+  --search-bg: #ffffff;
 }
 
 @theme inline {
@@ -10,13 +35,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #38251d;
-    --foreground: #ededed;
-  }
 }
 
 /* Remove Chrome autofill white background */

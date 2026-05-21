@@ -18,6 +18,9 @@
 * The actual audio element and playback logic live in MusicPlayer.
 */
 
+"use client"
+
+import { useEffect, useState } from "react"
 import { Song } from "@/models/song"
 import Image from "next/image"
 import { Play, Pause, SkipBack, SkipForward } from "lucide-react"
@@ -44,8 +47,24 @@ export default function PlayBar({
 
   const pathname = usePathname()
 
+  const [theme, setTheme] = useState("dark")
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") ?? "dark"
+    setTheme(savedTheme)
+    document.documentElement.setAttribute("data-theme", savedTheme)
+  }, [])
+
+  function toggleTheme() {
+    const newTheme = theme === "dark" ? "light" : "dark"
+
+    setTheme(newTheme)
+    localStorage.setItem("theme", newTheme)
+    document.documentElement.setAttribute("data-theme", newTheme)
+  }
+
   return (
-    <div className="fixed top-0 left-0 h-screen w-100 flex flex-col justify-start pt-60 items-center bg-[#7D5A50] border-r border-zinc-700 p-6">
+    <div className="fixed top-0 left-0 h-screen w-100 flex flex-col justify-start pt-60 items-center bg-[var(--sidebar)] border-r border-[var(--border-thin)] p-6">
 
       {/* Song info */}
       <div className="flex flex-col items-center gap-4">
@@ -55,7 +74,7 @@ export default function PlayBar({
           alt={song?.title ?? "No song selected"}
           width={400}
           height={400}
-          className="rounded-full border border-8 border-[#6C4A3C]/50"
+          className="rounded-full border border-8 border-[var(--border-thick)]"
         />
 
         <div className="text-center">
@@ -71,21 +90,21 @@ export default function PlayBar({
 
       {/* Play controls */}
       <div className="flex items-center justify-center gap-6 text-xl py-4">
-        <button className="bg-[#D6771F] w-10 h-10 flex items-center justify-center rounded-full"><SkipBack size={20} /></button>
-        <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] w-15 h-15 flex items-center justify-center rounded-full">
+        <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full"><SkipBack size={20} /></button>
+        <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] text-white w-15 h-15 flex items-center justify-center rounded-full">
           {isPlaying ? <Pause size={30} /> : <Play size={30} />}
         </button>        
-        <button className="bg-[#D6771F] w-10 h-10 flex items-center justify-center rounded-full"><SkipForward size={20} /></button>
+        <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full"><SkipForward size={20} /></button>
       </div>
 
       {/* Navigation and theme toggle */}
       <div className="fixed bottom-0">
         <div className="flex">
           <nav className="flex">
-            <Link href="/" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[#3e261b] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[#2d1a12] active:rounded-t-xl active:translate-y-0 ${pathname === "/" ? "bg-[#674940] rounded-t-xl" : "bg-[#7D5A50]"}`}>Home</Link>
-            <Link href="/liked" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[#3e261b] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[#2d1a12] active:rounded-t-xl active:translate-y-0 ${pathname === "/liked" ? "bg-[#674940] rounded-t-xl" : "bg-[#7D5A50]"}`}>Liked Songs</Link>
+            <Link href="/" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[var(--nav-hover)] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[var(--nav-active)] active:rounded-t-xl active:translate-y-0 ${pathname === "/" ? "bg-[var(--sidebar-active)] rounded-t-xl" : "bg-[var(--sidebar)]"}`}>Home</Link>
+            <Link href="/liked" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[var(--nav-hover)] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[var(--nav-active)] active:rounded-t-xl active:translate-y-0 ${pathname === "/liked" ? "bg-[var(--sidebar-active)] rounded-t-xl" : "bg-[var(--sidebar)]"}`}>Liked Songs</Link>
           </nav>
-          <button className="px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[#3e261b] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[#2d1a12] active:rounded-t-xl active:translate-y-0">Theme</button>
+          <button onClick={toggleTheme}className="px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[var(--nav-hover)] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[[var(--nav-active)] active:rounded-t-xl active:translate-y-0">{theme === "dark" ? "Light" : "Dark"}</button>
         </div>
       </div>
 

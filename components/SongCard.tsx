@@ -47,7 +47,7 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
     <div
       onClick={setThisCurrentSong}
       className={`p-4 rounded-xl cursor-pointer transition
-        ${isCurrent ? "bg-[#271A14] border-3 border-yellow-700": "bg-[#271A14]"}
+        ${isCurrent ? "bg-[var(--card)] border-3 border-[var(--current-border)]": "bg-[var(--card)]"}
       `}
     >
       <Image 
