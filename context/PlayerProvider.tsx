@@ -2,14 +2,16 @@
 * Global player state provider.
 *
 * - Stores the currently selected song in React state.
-* - Makes currentSong and setCurrentSong available to the entire app
-*   through React Context.
+* - Stores whether the selected song should restart from the beginning.
+* - Restores the last selected song from localStorage after reloads.
+* - Makes currentSong shouldRestart and setCurrentSong available
+* through React Context.
 *
-* Components such as SongGrid and MusicPlayer use the usePlayer hook
+* Components such as SongGrid, SongCard and MusicPlayer use the usePlayer hook
 * to access or update the global player state.
 *
-* This provider is mounted in the root layout so the player state
-* persists across navigation between pages.
+* This provider is mounted in the root layout so player state can be shared
+* across pages.
 */
 
 "use client"

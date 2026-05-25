@@ -1,13 +1,13 @@
 /**
 * Client-side control component for the music player.
 *
-* - Reads the currently selected song from the global PlayerProvider context.
-* - Stores playback state locally (isPlaying).
-* - Restores the last playback position from localStorage.
+* - Reads the currently selected song and restart behavior from PlayerProvider.
+* - Stores playback state locally with isPlaying.
 * - Controls audio playback through an HTMLAudioElement using a ref.
+* - Restores playback position from localStorage after reloads/search updates.
 * 
-* This component is rendered in the root layout so that the player state
-* persists across page navigation.
+* This component is rendered in the root layout so the player can continue
+* across navigation between pages.
 */
 
 "use client"
@@ -24,9 +24,10 @@ export default function MusicPlayer() {
   const isRestoringTimeRef = useRef(false)
 
   /**
-   * When the selected song from the global player context changes:
+   * When the selected song changes:
+   * - mark that playback position is being restored
    * - update the audio source
-   * - wait for metadata before restoring playback position
+   * - wait for metadata before deciding whether to restart or restore time
    */
   useEffect(() => {
     if (!audioRef.current || !currentSong) return
@@ -49,6 +50,10 @@ export default function MusicPlayer() {
     }
   }, [isPlaying])
 
+  /**
+  * Save the current playback position, except while a saved position
+  * is being restored.
+  */
   function handleTimeUpdate() {
     if (!audioRef.current || isRestoringTimeRef.current) return
 
@@ -58,6 +63,12 @@ export default function MusicPlayer() {
     )
   }
 
+  /**
+  * Once audio metadata has loaded:
+  * - restart from 0 if the song was selected manually
+  * - otherwise restore the saved playback position
+  * - start playback
+  */
   function handleLoadedMetadata() {
     if (!audioRef.current) return
 
