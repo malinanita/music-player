@@ -51,6 +51,13 @@ export default function MusicPlayer() {
   }, [isPlaying])
 
   /**
+   * Persist playback state so it can be restored after reloads.
+   */
+  useEffect(() => {
+    localStorage.setItem("is-playing", String(isPlaying))
+  }, [isPlaying])
+
+  /**
   * Save the current playback position, except while a saved position
   * is being restored.
   */
@@ -73,6 +80,7 @@ export default function MusicPlayer() {
     if (!audioRef.current) return
 
     const savedTime = localStorage.getItem("current-time")
+    const wasPlaying = localStorage.getItem("is-playing") === "true"
 
     audioRef.current.currentTime = shouldRestart
       ? 0
@@ -81,6 +89,11 @@ export default function MusicPlayer() {
         : 0
 
     isRestoringTimeRef.current = false
+
+    if (!wasPlaying && !shouldRestart) {
+      setIsPlaying(false)
+      return
+    }
 
     audioRef.current.play()
       .then(() => {
