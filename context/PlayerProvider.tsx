@@ -3,8 +3,9 @@
 *
 * - Stores the currently selected song in React state.
 * - Stores whether the selected song should restart from the beginning.
-* - Restores the last selected song from localStorage after reloads.
-* - Makes currentSong shouldRestart and setCurrentSong available
+* - Restores the last selected song from sessionStorage after reloads within 
+* the current browser session.
+* - Makes currentSong, shouldRestart and setCurrentSong available
 * through React Context.
 *
 * Components such as SongGrid, SongCard and MusicPlayer use the usePlayer hook
@@ -32,7 +33,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [shouldRestart, setShouldRestart] = useState(false)
 
   useEffect(() => {
-    const savedSong = localStorage.getItem("current-song")
+    const savedSong = sessionStorage.getItem("current-song")
 
     if (savedSong) {
       setCurrentSongState(JSON.parse(savedSong))
@@ -42,7 +43,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   function setCurrentSong(song: Song, restart = true) {
     setCurrentSongState(song)
     setShouldRestart(restart)
-    localStorage.setItem("current-song", JSON.stringify(song))
+    sessionStorage.setItem("current-song", JSON.stringify(song))
   }
 
   return (

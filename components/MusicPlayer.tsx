@@ -4,7 +4,8 @@
 * - Reads the currently selected song and restart behavior from PlayerProvider.
 * - Stores playback state locally with isPlaying.
 * - Controls audio playback through an HTMLAudioElement using a ref.
-* - Restores playback position from localStorage after reloads/search updates.
+* - Restores playback position from sessionStorage after reloads/search updates.
+* - Playback state is preserved during the current browser session.
 * 
 * This component is rendered in the root layout so the player can continue
 * across navigation between pages.
@@ -54,7 +55,7 @@ export default function MusicPlayer() {
    * Persist playback state so it can be restored after reloads.
    */
   useEffect(() => {
-    localStorage.setItem("is-playing", String(isPlaying))
+    sessionStorage.setItem("is-playing", String(isPlaying))
   }, [isPlaying])
 
   /**
@@ -64,7 +65,7 @@ export default function MusicPlayer() {
   function handleTimeUpdate() {
     if (!audioRef.current || isRestoringTimeRef.current) return
 
-    localStorage.setItem(
+    sessionStorage.setItem(
       "current-time",
       String(audioRef.current.currentTime)
     )
@@ -79,8 +80,8 @@ export default function MusicPlayer() {
   function handleLoadedMetadata() {
     if (!audioRef.current) return
 
-    const savedTime = localStorage.getItem("current-time")
-    const wasPlaying = localStorage.getItem("is-playing") === "true"
+    const savedTime = sessionStorage.getItem("current-time")
+    const wasPlaying = sessionStorage.getItem("is-playing") === "true"
 
     audioRef.current.currentTime = shouldRestart
       ? 0
