@@ -33,14 +33,10 @@ export default async function Home({ searchParams }: PageProps) {
   const songs = await getSongs(term)
 
   return (
-    <>
-      <header className="px-13 ml-100">
-        <SearchBar defaultValue={term} />
-      </header>
-
-       <main className="px-13 py-5 pb-28">
-        <SongGrid songs={songs} />
-      </main>
-    </>
+    <main className="md:ml-100 px-4 md:px-13 py-20 md:py-5 pb-28 md:pb-5">
+      <SearchBar defaultValue={term} />
+      <SongGrid songs={songs} />
+    </main>
+    
   )
 }

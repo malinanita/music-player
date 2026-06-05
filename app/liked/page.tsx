@@ -8,8 +8,8 @@ export default function LikesPage() {
   const likedSongs = getLikedSongs()
 
   return (
-    <main className="px-13 py-5 pb-28">
-      <section className="ml-100 max-w-5xl mx-auto mb-6">
+    <main className="md:ml-100 px-4 md:px-13 py-20 md:py-5 pb-28 md:pb-5">
+      <section className="max-w-5xl mx-auto mb-6">
         <h1 className="text-3xl mb-6">Liked Songs</h1>
       </section>
 

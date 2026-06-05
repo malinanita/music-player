@@ -46,8 +46,11 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
   return (
     <div
       onClick={setThisCurrentSong}
-      className={`p-4 rounded-xl cursor-pointer transition
-        ${isCurrent ? "bg-[var(--card)] border-3 border-[var(--current-border)]": "bg-[var(--card)]"}
+      className={`p-3 rounded-xl cursor-pointer transition
+        ${isCurrent 
+          ? "bg-[var(--card)] border-3 border-[var(--current-border)]": 
+          "bg-[var(--card)]"
+        }
       `}
     >
       <Image 
@@ -55,13 +58,17 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
         alt=""
         width={300}
         height={300}
-        className="w-80 h-80 object-cover"
+        className="w-full aspect-square object-cover rounded-lg"
       />
 
-      <div className="flex justify-between items-center py-1">
-        <div>
-          <p className="py-1">{song.title}</p>
-          <p className="text-sm text-zinc-400">{song.artist}</p>
+      <div className="flex justify-between items-center py-2">
+        <div className="min-w-0">
+          <p className="truncate">
+            {song.title}
+          </p>
+          <p className="text-sm text-zinc-400 truncate">
+            {song.artist}
+          </p>
         </div>
 
         <button onClick={handleLike}>

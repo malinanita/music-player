@@ -64,47 +64,68 @@ export default function PlayBar({
   }
 
   return (
-    <div className="fixed top-0 left-0 h-screen w-100 flex flex-col justify-start pt-60 items-center bg-[var(--sidebar)] border-r border-[var(--border-thin)] p-6">
+    <div className="fixed z-50 bg-[var(--sidebar)] border-[var(--border-thin)] 
+      bottom-0 left-0 w-full h-24
+      flex items-center justify-between px-10 py-3
+      border-t
+      md:top-0 md:bottom-auto md:left-0 md:h-screen md:w-100
+      md:flex-col md:justify-start md:pt-60 md:p-6 md:border-t-0 md:border-r">
 
       {/* Song info */}
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex items-center gap-3 md:flex-col md:gap-4">
 
-        <Image
-          src={coverImage}
-          alt={song?.title ?? "No song selected"}
-          width={400}
-          height={400}
-          className="rounded-full border border-8 border-[var(--border-thick)]"
-        />
+        <div className="hidden md:block"> 
+          <Image
+            src={coverImage}
+            alt={song?.title ?? "No song selected"}
+            width={400}
+            height={400}
+            className="rounded-full border border-8 border-[var(--border-thick)]"
+          />
+        </div>
 
-        <div className="text-center">
-          <p className="font-medium">
+        <div className="text-left md:text-center max-w-38 md:max-w-none">
+          <p className="font-medium truncate">
             {song?.title ?? "No song selected"}
           </p>
 
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm text-zinc-400 truncate">
             {song?.artist ?? "Select a song to play"}
           </p>
         </div>
       </div>
 
       {/* Play controls */}
-      <div className="flex items-center justify-center gap-6 text-xl py-4">
-        <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full"><SkipBack size={20} /></button>
+      <div className="flex items-center justify-center gap-3 md:gap-6 md:py-4">
+        <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full">
+          <SkipBack size={20} />
+        </button>
         <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] text-white w-15 h-15 flex items-center justify-center rounded-full">
           {isPlaying ? <Pause size={30} /> : <Play size={30} />}
         </button>        
-        <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full"><SkipForward size={20} /></button>
+        <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full">
+          <SkipForward size={20} />
+        </button>
       </div>
 
       {/* Navigation and theme toggle */}
-      <div className="fixed bottom-0">
+      <div className="fixed top-0 left-0 w-full z-50
+                      flex justify-center
+                      md:w-100
+                      md:bottom-0
+                      md:top-auto">
         <div className="flex">
           <nav className="flex">
-            <Link href="/" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[var(--nav-hover)] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[var(--nav-active)] active:rounded-t-xl active:translate-y-0 ${pathname === "/" ? "bg-[var(--sidebar-active)] rounded-t-xl" : "bg-[var(--sidebar)]"}`}>Home</Link>
-            <Link href="/liked" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[var(--nav-hover)] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[var(--nav-active)] active:rounded-t-xl active:translate-y-0 ${pathname === "/liked" ? "bg-[var(--sidebar-active)] rounded-t-xl" : "bg-[var(--sidebar)]"}`}>Liked Songs</Link>
+            <Link href="/" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-none md:rounded-t-xl hover:rounded-t-none hover:bg-[var(--nav-hover)] md:hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:rounded-t-none active:bg-[var(--nav-active)] md:active:rounded-t-xl active:translate-y-0 ${pathname === "/" ? "bg-[var(--sidebar-active)] md:rounded-t-xl" : "bg-[var(--sidebar)]"}`}>
+              Home
+            </Link>
+            <Link href="/liked" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-none md:rounded-t-xl hover:rounded-t-none hover:bg-[var(--nav-hover)] md:hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:rounded-t-none active:bg-[var(--nav-active)] md:active:rounded-t-xl active:translate-y-0 ${pathname === "/liked" ? "bg-[var(--sidebar-active)] md:rounded-t-xl" : "bg-[var(--sidebar)]"}`}>
+              Liked Songs
+            </Link>
           </nav>
-          <button onClick={toggleTheme}className="px-5 py-3 transition-all duration-200 ease-out rounded-t-xl hover:bg-[var(--nav-hover)] hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:bg-[[var(--nav-active)] active:rounded-t-xl active:translate-y-0">{theme === "dark" ? "Light" : "Dark"}</button>
+          <button onClick={toggleTheme}className="px-5 py-3 transition-all duration-200 ease-out rounded-t-none md:rounded-t-xl hover:rounded-t-none hover:bg-[var(--nav-hover)] md:hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:rounded-t-none active:bg-[var(--nav-active)] md:active:rounded-t-xl active:translate-y-0">
+            {theme === "dark" ? "Light" : "Dark"}
+          </button>
         </div>
       </div>
 
