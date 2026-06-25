@@ -49,6 +49,9 @@ export default function PlayBar({
 
   const [theme, setTheme] = useState("dark")
 
+  const navButton =
+  "px-5 py-3 transition-all duration-200 ease-out rounded-t-none md:rounded-t-xl hover:bg-[var(--nav-hover)] hover:-translate-y-0.5 hover:shadow-lg active:bg-[var(--nav-active)] active:translate-y-0";
+
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") ?? "dark"
     setTheme(savedTheme)
@@ -65,11 +68,11 @@ export default function PlayBar({
 
   return (
     <div className="fixed z-50 bg-[var(--sidebar)] border-[var(--border-thin)]
-  bottom-0 left-0 w-full h-24
-  flex items-center justify-between px-10 py-3 border-t
-  md:top-0 md:bottom-auto md:left-0 md:h-dvh md:w-100
-  md:flex-col md:justify-center md:gap-6 md:p-6 md:pb-16
-  md:border-t-0 md:border-r">
+        bottom-0 left-0 w-full h-24
+        flex items-center justify-between px-10 py-3 border-t
+        md:top-0 md:bottom-auto md:left-0 md:h-dvh md:w-100
+        md:flex-col md:justify-center md:gap-6 md:p-6 md:pb-16
+        md:border-t-0 md:border-r">
 
       {/* Song info */}
       <div className="flex items-center gap-3 md:flex-col md:gap-4">
@@ -95,36 +98,46 @@ export default function PlayBar({
             {song?.artist ?? "Select a song to play"}
           </p>
         </div>
-
-        {/* Play controls */}
-        <div className="flex items-center justify-center gap-3 md:gap-6 md:py-4">
-          <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full">
-            <SkipBack size={20} />
-          </button>
-          <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] text-white w-15 h-15 flex items-center justify-center rounded-full">
-            {isPlaying ? <Pause size={30} /> : <Play size={30} />}
-          </button>        
-          <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full">
-            <SkipForward size={20} />
-          </button>
-        </div>
       </div>
 
-      
+      {/* Play controls */}
+      <div className="flex items-center justify-center gap-3 md:gap-6 md:py-4">
+        <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full">
+          <SkipBack size={20} />
+        </button>
+        <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] text-white w-15 h-15 flex items-center justify-center rounded-full">
+          {isPlaying ? <Pause size={30} /> : <Play size={30} />}
+        </button>        
+        <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full">
+          <SkipForward size={20} />
+        </button>
+      </div>
+
 
       {/* Navigation and theme toggle */}
       <div className="fixed top-0 left-0 w-full z-50 flex justify-center
                 md:absolute md:top-auto md:bottom-0 md:left-0 md:w-full">
         <div className="flex">
           <nav className="flex">
-            <Link href="/" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-none md:rounded-t-xl hover:rounded-t-none hover:bg-[var(--nav-hover)] md:hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:rounded-t-none active:bg-[var(--nav-active)] md:active:rounded-t-xl active:translate-y-0 ${pathname === "/" ? "bg-[var(--sidebar-active)] md:rounded-t-xl" : "bg-[var(--sidebar)]"}`}>
+            <Link href="/" className={`${navButton} ${pathname === "/" ? "bg-[var(--sidebar-active)]" : "bg-[var(--sidebar)]"}`}>
               Home
             </Link>
-            <Link href="/liked" className={`px-5 py-3 transition-all duration-200 ease-out rounded-t-none md:rounded-t-xl hover:rounded-t-none hover:bg-[var(--nav-hover)] md:hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:rounded-t-none active:bg-[var(--nav-active)] md:active:rounded-t-xl active:translate-y-0 ${pathname === "/liked" ? "bg-[var(--sidebar-active)] md:rounded-t-xl" : "bg-[var(--sidebar)]"}`}>
+            <Link href="/liked" className={`${navButton} ${pathname === "/liked" ? "bg-[var(--sidebar-active)]" : "bg-[var(--sidebar)]"}`}>
               Liked Songs
             </Link>
           </nav>
-          <button onClick={toggleTheme}className="px-5 py-3 transition-all duration-200 ease-out rounded-t-none md:rounded-t-xl hover:rounded-t-none hover:bg-[var(--nav-hover)] md:hover:rounded-t-xl hover:-translate-y-0.5 hover:shadow-lg active:rounded-t-none active:bg-[var(--nav-active)] md:active:rounded-t-xl active:translate-y-0">
+          <button onClick={toggleTheme}className="px-5 py-3 
+                  transition-all duration-200 ease-out 
+                  bg-[var(--sidebar)] rounded-t-none md:rounded-t-xl 
+                  hover:rounded-t-none 
+                  hover:bg-[var(--nav-hover)] 
+                  md:hover:rounded-t-xl 
+                  hover:-translate-y-0.5 
+                  hover:shadow-lg 
+                  active:rounded-t-none 
+                  active:bg-[var(--nav-active)] 
+                  md:active:rounded-t-xl 
+                  active:translate-y-0">
             {theme === "dark" ? "Light" : "Dark"}
           </button>
         </div>
