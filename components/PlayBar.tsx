@@ -69,7 +69,7 @@ export default function PlayBar({
       flex items-center justify-between px-10 py-3
       border-t
       md:top-0 md:bottom-auto md:left-0 md:h-screen md:w-100
-      md:flex-col md:justify-start md:pt-60 md:p-6 md:border-t-0 md:border-r">
+      md:flex-col md:justify-start md:pt-35 md:p-6 md:border-t-0 md:border-r">
 
       {/* Song info */}
       <div className="flex items-center gap-3 md:flex-col md:gap-4">
@@ -78,8 +78,8 @@ export default function PlayBar({
           <Image
             src={coverImage}
             alt={song?.title ?? "No song selected"}
-            width={400}
-            height={400}
+            width={320}
+            height={320}
             className="rounded-full border border-8 border-[var(--border-thick)]"
           />
         </div>
