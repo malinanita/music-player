@@ -5,7 +5,12 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
 
   images: {
-    domains: ["is1-ssl.mzstatic.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "is1-ssl.mzstatic.com",
+      },
+    ],
   },
 };
 
