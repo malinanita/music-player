@@ -23,7 +23,7 @@
 import { useEffect, useState } from "react"
 import { Song } from "@/models/song"
 import Image from "next/image"
-import { Play, Pause, SkipBack, SkipForward } from "lucide-react"
+import { Play, Pause, SkipBack, SkipForward, Sun, Moon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -126,19 +126,20 @@ export default function PlayBar({
               Liked Songs
             </Link>
           </nav>
-          <button onClick={toggleTheme}className="px-5 py-3 
-                  transition-all duration-200 ease-out 
-                  bg-[var(--sidebar)] rounded-t-none md:rounded-t-xl 
-                  hover:rounded-t-none 
-                  hover:bg-[var(--nav-hover)] 
-                  md:hover:rounded-t-xl 
-                  hover:-translate-y-0.5 
-                  hover:shadow-lg 
-                  active:rounded-t-none 
-                  active:bg-[var(--nav-active)] 
-                  md:active:rounded-t-xl 
-                  active:translate-y-0">
-            {theme === "dark" ? "Light" : "Dark"}
+          <button onClick={toggleTheme} aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"} className="px-5 py-3
+                  transition-all duration-200 ease-out
+                  bg-[var(--sidebar)] rounded-t-none md:rounded-t-xl
+                  hover:rounded-t-none
+                  hover:bg-[var(--nav-hover)]
+                  md:hover:rounded-t-xl
+                  hover:-translate-y-0.5
+                  hover:shadow-lg
+                  active:rounded-t-none
+                  active:bg-[var(--nav-active)]
+                  md:active:rounded-t-xl
+                  active:translate-y-0
+                  flex items-center justify-center">
+            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
           </button>
         </div>
       </div>
