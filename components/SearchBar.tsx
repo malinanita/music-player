@@ -1,24 +1,36 @@
 /**
- * SEARCH BAR (Server Component)
+ * SEARCH BAR (Client Component)
  *
- * - Updates the URL using a GET request.
- * - Does NOT manage state.
- * - Does NOT fetch data.
+ * - Updates the URL client-side using the Next.js router.
+ * - Does NOT fetch data itself.
  *
  * When submitted:
- * → The browser updates the URL with ?term=value
- * → Next.js re-renders page.tsx on the server
+ * → The URL updates with ?term=value via router.push
+ * → Next.js re-renders page.tsx without a full page reload,
+ *   so playback in MusicPlayer isn't interrupted.
 */
+
+"use client"
+
+import { useRouter } from "next/navigation"
 
 interface SearchBarProps {
   defaultValue?: string
 }
 
 export default function SearchBar({ defaultValue }: SearchBarProps) {
+  const router = useRouter()
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+
+    const term = new FormData(e.currentTarget).get("term") as string
+    router.push(`/?term=${encodeURIComponent(term)}`)
+  }
+
   return (
     <form
-      action="/"       /* Submit to homepage */
-      method="GET"         /* Use URL query parameters */
+      onSubmit={handleSubmit}
       className="max-w-md mx-auto py-7 mb-10 flex items-stretch gap-2"
     >
       <label htmlFor="term" className="sr-only">
