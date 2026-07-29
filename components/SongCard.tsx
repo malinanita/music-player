@@ -12,7 +12,7 @@
 import Image from "next/image"
 import { Song } from "@/models/song"
 import { useState, useEffect } from "react"
-import { toggleLikeAction, isLikedAction } from "@/lib/actions"
+import { toggleLike, isLiked } from "@/lib/likes-store"
 import { Heart } from "lucide-react"
 
 interface SongCardProps {
@@ -27,21 +27,15 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
 
   //Check if song is already liked
   useEffect(() => {
-    async function checkLiked() {
-      const result = await isLikedAction(song.id)
-      setLiked(result)
-    }
-
-    checkLiked()
+    setLiked(isLiked(song.id))
   }, [song.id])
 
-  
+
   //Toggle like state
-  async function handleLike(e: React.MouseEvent) {
+  function handleLike(e: React.MouseEvent) {
     e.stopPropagation()
 
-    const newState = await toggleLikeAction(song)
-    setLiked(newState)
+    setLiked(toggleLike(song))
   }
 
   return (

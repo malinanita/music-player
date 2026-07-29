@@ -1,11 +1,17 @@
-export const dynamic = "force-dynamic"
+"use client"
 
+import { useEffect, useState } from "react"
 import { getLikedSongs } from "@/lib/likes-store"
+import { Song } from "@/models/song"
 import SongGrid from "@/components/SongGrid"
 
 export default function LikesPage() {
 
-  const likedSongs = getLikedSongs()
+  const [likedSongs, setLikedSongs] = useState<Song[]>([])
+
+  useEffect(() => {
+    setLikedSongs(getLikedSongs())
+  }, [])
 
   return (
     <main className="md:ml-100 px-4 md:px-13 py-20 md:py-10 pb-28 md:pb-5">

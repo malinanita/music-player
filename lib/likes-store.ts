@@ -1,31 +1,33 @@
 import type { Song } from "@/models/song"
 
-const globalForLikes = globalThis as unknown as {
-  likesStore: Map<string, Song>;
+const STORAGE_KEY = "liked-songs"
+
+function readLikedSongs(): Song[] {
+  const raw = localStorage.getItem(STORAGE_KEY)
+  return raw ? JSON.parse(raw) : []
 }
 
-export const likesStore =
-  globalForLikes.likesStore || new Map<string, Song>()
-
-if (process.env.NODE_ENV !== "production") {
-  globalForLikes.likesStore = likesStore
+function writeLikedSongs(songs: Song[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(songs))
 }
 
-export function toggleLike(song: Song) {
+export function toggleLike(song: Song): boolean {
+  const songs = readLikedSongs()
+  const isCurrentlyLiked = songs.some((s) => s.id === song.id)
 
-  if (likesStore.has(song.id)) {
-    likesStore.delete(song.id)
+  if (isCurrentlyLiked) {
+    writeLikedSongs(songs.filter((s) => s.id !== song.id))
     return false
-  } else {
-    likesStore.set(song.id, song)
-    return true
   }
+
+  writeLikedSongs([...songs, song])
+  return true
 }
 
 export function getLikedSongs(): Song[] {
-  return Array.from(likesStore.values())
+  return readLikedSongs()
 }
 
-export function isLiked(id: string) {
-  return likesStore.has(id)
+export function isLiked(id: string): boolean {
+  return readLikedSongs().some((s) => s.id === id)
 }
