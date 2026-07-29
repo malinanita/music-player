@@ -14,7 +14,7 @@ export default function LikesPage() {
       </section>
 
       {likedSongs.length === 0 ? (
-        <p className="text-zinc-400">
+        <p className="max-w-5xl mx-auto text-zinc-400">
           You haven't liked any songs yet.
         </p>
       ) : (
