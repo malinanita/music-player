@@ -13,6 +13,7 @@ import Image from "next/image"
 import { Song } from "@/models/song"
 import { useState, useEffect } from "react"
 import { toggleLikeAction, isLikedAction } from "@/lib/actions"
+import { Heart } from "lucide-react"
 
 interface SongCardProps {
   song: Song;
@@ -71,8 +72,12 @@ export default function SongCard( { song, isCurrent, setThisCurrentSong }: SongC
           </p>
         </div>
 
-        <button onClick={handleLike}>
-          {liked ? "❤️" : "🤍"}
+        <button onClick={handleLike} aria-label={liked ? "Unlike song" : "Like song"}>
+          <Heart
+            size={20}
+            className={liked ? "text-red-500" : "text-zinc-400"}
+            fill={liked ? "#ef4444" : "none"}
+          />
         </button>
       </div>
 
