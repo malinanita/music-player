@@ -19,7 +19,7 @@ import { usePlayer } from "@/context/PlayerProvider"
 
 
 export default function MusicPlayer() {
-  const { currentSong, shouldRestart } = usePlayer()
+  const { currentSong, shouldRestart, queue, playNext, playPrevious } = usePlayer()
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const isRestoringTimeRef = useRef(false)
@@ -113,12 +113,16 @@ export default function MusicPlayer() {
         isPlaying={isPlaying}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onNext={playNext}
+        onPrevious={playPrevious}
+        disableNav={queue.length <= 1}
       />
 
-      <audio 
-        ref={audioRef} 
+      <audio
+        ref={audioRef}
         onLoadedMetadata={handleLoadedMetadata}
         onTimeUpdate={handleTimeUpdate}
+        onEnded={playNext}
       />
     </div>
   )

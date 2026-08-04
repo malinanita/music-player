@@ -32,13 +32,19 @@ interface PlayBarProps {
   isPlaying: boolean
   onPlay: () => void
   onPause: () => void
+  onNext: () => void
+  onPrevious: () => void
+  disableNav: boolean
 }
 
 export default function PlayBar({
   song,
   isPlaying,
   onPlay,
-  onPause
+  onPause,
+  onNext,
+  onPrevious,
+  disableNav
 }: PlayBarProps) {
 
   const coverImage = song
@@ -102,13 +108,23 @@ export default function PlayBar({
 
       {/* Play controls */}
       <div className="flex items-center justify-center gap-3 md:gap-6 md:py-4">
-        <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full">
+        <button
+          onClick={onPrevious}
+          disabled={disableNav}
+          className={`w-10 h-10 flex items-center justify-center rounded-full text-white
+            ${disableNav ? "bg-[#D6771F]/40 cursor-not-allowed" : "bg-[#D6771F]"}`}
+        >
           <SkipBack size={20} />
         </button>
         <button onClick={isPlaying ? onPause : onPlay} className="bg-[#FFA857] text-white w-15 h-15 flex items-center justify-center rounded-full">
           {isPlaying ? <Pause size={30} /> : <Play size={30} />}
-        </button>        
-        <button className="bg-[#D6771F] text-white w-10 h-10 flex items-center justify-center rounded-full">
+        </button>
+        <button
+          onClick={onNext}
+          disabled={disableNav}
+          className={`w-10 h-10 flex items-center justify-center rounded-full text-white
+            ${disableNav ? "bg-[#D6771F]/40 cursor-not-allowed" : "bg-[#D6771F]"}`}
+        >
           <SkipForward size={20} />
         </button>
       </div>
