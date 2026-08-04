@@ -2,11 +2,13 @@
 * Global player state provider.
 *
 * - Stores the currently selected song in React state.
+* - Stores the active navigation queue (the song list a track was
+*   selected from) in React state.
 * - Stores whether the selected song should restart from the beginning.
-* - Restores the last selected song from sessionStorage after reloads within 
-* the current browser session.
-* - Makes currentSong, shouldRestart and setCurrentSong available
-* through React Context.
+* - Restores the last selected song and queue from sessionStorage after
+*   reloads within the current browser session.
+* - Makes currentSong, shouldRestart, queue, setCurrentSong, playNext and
+*   playPrevious available through React Context.
 *
 * Components such as SongGrid, SongCard and MusicPlayer use the usePlayer hook
 * to access or update the global player state.
@@ -23,7 +25,10 @@ import { Song } from "@/models/song"
 type PlayerContextType = {
   currentSong: Song | null
   shouldRestart: boolean
-  setCurrentSong: (song: Song) => void
+  queue: Song[]
+  setCurrentSong: (song: Song, queue?: Song[]) => void
+  playNext: () => void
+  playPrevious: () => void
 }
 
 const PlayerContext = createContext<PlayerContextType | null>(null)
@@ -31,23 +36,60 @@ const PlayerContext = createContext<PlayerContextType | null>(null)
 export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [currentSong, setCurrentSongState] = useState<Song | null>(null)
   const [shouldRestart, setShouldRestart] = useState(false)
+  const [queue, setQueue] = useState<Song[]>([])
 
   useEffect(() => {
     const savedSong = sessionStorage.getItem("current-song")
+    const savedQueue = sessionStorage.getItem("queue")
 
     if (savedSong) {
       setCurrentSongState(JSON.parse(savedSong))
     }
+
+    if (savedQueue) {
+      setQueue(JSON.parse(savedQueue))
+    }
   }, [])
 
-  function setCurrentSong(song: Song, restart = true) {
+  /**
+   * Select a song to play.
+   * When called with a queue (song-grid clicks), replaces the active
+   * navigation queue. When called without one (playNext/playPrevious),
+   * the existing queue is left as-is.
+   */
+  function setCurrentSong(song: Song, newQueue?: Song[]) {
     setCurrentSongState(song)
-    setShouldRestart(restart)
+    setShouldRestart(true)
     sessionStorage.setItem("current-song", JSON.stringify(song))
+
+    if (newQueue) {
+      setQueue(newQueue)
+      sessionStorage.setItem("queue", JSON.stringify(newQueue))
+    }
+  }
+
+  function playNext() {
+    if (!currentSong || queue.length <= 1) return
+
+    const index = queue.findIndex((s) => s.id === currentSong.id)
+    if (index === -1) return
+
+    setCurrentSong(queue[(index + 1) % queue.length])
+  }
+
+  function playPrevious() {
+    if (!currentSong || queue.length <= 1) return
+
+    const index = queue.findIndex((s) => s.id === currentSong.id)
+    if (index === -1) return
+
+    setCurrentSong(queue[(index - 1 + queue.length) % queue.length])
   }
 
   return (
-    <PlayerContext.Provider value={{ currentSong, shouldRestart,setCurrentSong }}>
+    <PlayerContext.Provider
+      value={{ currentSong, shouldRestart, queue, setCurrentSong, playNext, playPrevious }}
+    >
       {children}
     </PlayerContext.Provider>
   )
