@@ -7,8 +7,8 @@
 * - Stores whether the selected song should restart from the beginning.
 * - Restores the last selected song and queue from sessionStorage after
 *   reloads within the current browser session.
-* - Makes currentSong, shouldRestart, queue, setCurrentSong, playNext and
-*   playPrevious available through React Context.
+* - Makes currentSong, shouldRestart, queue, setCurrentSong, playNext,
+*   playPrevious and hasNext available through React Context.
 *
 * Components such as SongGrid, SongCard and MusicPlayer use the usePlayer hook
 * to access or update the global player state.
@@ -29,6 +29,7 @@ type PlayerContextType = {
   setCurrentSong: (song: Song, queue?: Song[]) => void
   playNext: () => void
   playPrevious: () => void
+  hasNext: () => boolean
 }
 
 const PlayerContext = createContext<PlayerContextType | null>(null)
@@ -86,9 +87,16 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     setCurrentSong(queue[(index - 1 + queue.length) % queue.length])
   }
 
+  function hasNext(): boolean {
+    if (!currentSong || queue.length <= 1) return false
+
+    const index = queue.findIndex((s) => s.id === currentSong.id)
+    return index !== -1 && index < queue.length - 1
+  }
+
   return (
     <PlayerContext.Provider
-      value={{ currentSong, shouldRestart, queue, setCurrentSong, playNext, playPrevious }}
+      value={{ currentSong, shouldRestart, queue, setCurrentSong, playNext, playPrevious, hasNext }}
     >
       {children}
     </PlayerContext.Provider>

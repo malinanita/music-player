@@ -19,7 +19,7 @@ import { usePlayer } from "@/context/PlayerProvider"
 
 
 export default function MusicPlayer() {
-  const { currentSong, shouldRestart, queue, playNext, playPrevious } = usePlayer()
+  const { currentSong, shouldRestart, queue, playNext, playPrevious, hasNext } = usePlayer()
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const isRestoringTimeRef = useRef(false)
@@ -105,6 +105,18 @@ export default function MusicPlayer() {
       })
   }
 
+  /**
+   * When a track finishes naturally, advance to the next queued song —
+   * but don't wrap past the end of the queue the way manual Next does.
+   */
+  function handleEnded() {
+    if (hasNext()) {
+      playNext()
+    } else {
+      setIsPlaying(false)
+    }
+  }
+
   return (
     <div className="ml-100">
 
@@ -115,14 +127,14 @@ export default function MusicPlayer() {
         onPause={() => setIsPlaying(false)}
         onNext={playNext}
         onPrevious={playPrevious}
-        disableNav={queue.length <= 1}
+        disableNav={queue.length <= 1 || !currentSong}
       />
 
       <audio
         ref={audioRef}
         onLoadedMetadata={handleLoadedMetadata}
         onTimeUpdate={handleTimeUpdate}
-        onEnded={playNext}
+        onEnded={handleEnded}
       />
     </div>
   )

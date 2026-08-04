@@ -111,6 +111,7 @@ export default function PlayBar({
         <button
           onClick={onPrevious}
           disabled={disableNav}
+          aria-label="Previous track"
           className={`w-10 h-10 flex items-center justify-center rounded-full text-white
             ${disableNav ? "bg-[#D6771F]/40 cursor-not-allowed" : "bg-[#D6771F]"}`}
         >
@@ -122,6 +123,7 @@ export default function PlayBar({
         <button
           onClick={onNext}
           disabled={disableNav}
+          aria-label="Next track"
           className={`w-10 h-10 flex items-center justify-center rounded-full text-white
             ${disableNav ? "bg-[#D6771F]/40 cursor-not-allowed" : "bg-[#D6771F]"}`}
         >
