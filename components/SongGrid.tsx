@@ -31,7 +31,7 @@ export default function SongGrid({ songs }: SongGridProps) {
             <SongCard 
               song= { song }
               isCurrent={currentSong?.id === song.id}
-              setThisCurrentSong={() => setCurrentSong(song)}
+              setThisCurrentSong={() => setCurrentSong(song, songs)}
             />
           </li>
         ))}
