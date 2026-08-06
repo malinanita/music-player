@@ -37,13 +37,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Remove Chrome autofill white background */
+/* Match theme instead of Chrome's default autofill/autocomplete styling */
 input:-webkit-autofill,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px #27272a inset;
-  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0 1000px var(--search-bg) inset;
+  -webkit-text-fill-color: var(--foreground);
+  caret-color: var(--foreground);
   transition: background-color 5000s ease-in-out 0s;
 }
 
