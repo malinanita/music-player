@@ -26,6 +26,7 @@ import Image from "next/image"
 import { Play, Pause, SkipBack, SkipForward, Sun, Moon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import ScrollingText from "./ScrollingText"
 
 interface PlayBarProps {
   song: Song | null;
@@ -96,13 +97,15 @@ export default function PlayBar({
         </div>
 
         <div className="text-left md:text-center max-w-38 md:max-w-56">
-          <p className="font-medium truncate">
-            {song?.title ?? "No song selected"}
-          </p>
+          <ScrollingText
+            text={song?.title ?? "No song selected"}
+            className="font-medium"
+          />
 
-          <p className="text-sm text-zinc-400 truncate">
-            {song?.artist ?? "Select a song to play"}
-          </p>
+          <ScrollingText
+            text={song?.artist ?? "Select a song to play"}
+            className="text-sm text-zinc-400"
+          />
         </div>
       </div>
 

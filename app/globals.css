@@ -53,3 +53,39 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Scrolling text (see components/ScrollingText.tsx) */
+@keyframes scrolling-text-bounce {
+  0%,
+  10% {
+    transform: translateX(0);
+  }
+  45%,
+  55% {
+    transform: translateX(calc(-1 * var(--scroll-distance)));
+  }
+  90%,
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.scrolling-text-content {
+  animation: scrolling-text-bounce var(--scroll-duration, 6s) ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.scrolling-text-viewport:hover .scrolling-text-content {
+  animation-play-state: running;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolling-text-content {
+    animation: none;
+  }
+
+  /* Fall back to a plain ellipsis instead of a hard, silent cut-off. */
+  .scrolling-text-viewport {
+    text-overflow: ellipsis;
+  }
+}
