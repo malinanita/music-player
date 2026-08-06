@@ -95,7 +95,7 @@ export default function PlayBar({
           />
         </div>
 
-        <div className="text-left md:text-center max-w-38 md:max-w-none">
+        <div className="text-left md:text-center max-w-38 md:max-w-56">
           <p className="font-medium truncate">
             {song?.title ?? "No song selected"}
           </p>
