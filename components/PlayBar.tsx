@@ -57,7 +57,7 @@ export default function PlayBar({
   const [theme, setTheme] = useState("dark")
 
   const navButton =
-  "px-5 py-3 transition-all duration-200 ease-out rounded-t-none md:rounded-t-xl hover:bg-[var(--nav-hover)] hover:-translate-y-0.5 hover:shadow-lg active:bg-[var(--nav-active)] active:translate-y-0";
+  "px-5 py-3 transition-all duration-200 ease-out md:rounded-t-xl hover:bg-[var(--nav-hover)] hover:-translate-y-0.5 hover:shadow-lg active:bg-[var(--nav-active)] active:translate-y-0";
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") ?? "dark"
@@ -138,7 +138,7 @@ export default function PlayBar({
       {/* Navigation and theme toggle */}
       <div className="fixed top-0 left-0 w-full z-50 flex justify-center
                 md:absolute md:top-auto md:bottom-0 md:left-0 md:w-full">
-        <div className="flex">
+        <div className="flex rounded-b-xl overflow-hidden md:rounded-none md:overflow-visible">
           <nav className="flex">
             <Link href="/" className={`${navButton} ${pathname === "/" ? "bg-[var(--sidebar-active)]" : "bg-[var(--sidebar)]"}`}>
               Home
@@ -149,13 +149,11 @@ export default function PlayBar({
           </nav>
           <button onClick={toggleTheme} aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"} className="px-5 py-3
                   transition-all duration-200 ease-out
-                  bg-[var(--sidebar)] rounded-t-none md:rounded-t-xl
-                  hover:rounded-t-none
+                  bg-[var(--sidebar)] md:rounded-t-xl
                   hover:bg-[var(--nav-hover)]
                   md:hover:rounded-t-xl
                   hover:-translate-y-0.5
                   hover:shadow-lg
-                  active:rounded-t-none
                   active:bg-[var(--nav-active)]
                   md:active:rounded-t-xl
                   active:translate-y-0
