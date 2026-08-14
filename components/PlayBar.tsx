@@ -27,6 +27,7 @@ import { Play, Pause, SkipBack, SkipForward, Sun, Moon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import ScrollingText from "./ScrollingText"
+import { useSearch } from "@/context/SearchProvider"
 
 interface PlayBarProps {
   song: Song | null;
@@ -53,6 +54,8 @@ export default function PlayBar({
   : "/images/placeholder-noplay.png"
 
   const pathname = usePathname()
+  const { lastTerm } = useSearch()
+  const homeHref = lastTerm ? `/?term=${encodeURIComponent(lastTerm)}` : "/"
 
   const [theme, setTheme] = useState("dark")
 
@@ -140,7 +143,7 @@ export default function PlayBar({
                 md:absolute md:top-auto md:bottom-0 md:left-0 md:w-full">
         <div className="flex rounded-b-xl overflow-hidden md:rounded-none md:overflow-visible">
           <nav className="flex">
-            <Link href="/" className={`${navButton} ${pathname === "/" ? "bg-[var(--sidebar-active)]" : "bg-[var(--sidebar)]"}`}>
+            <Link href={homeHref} className={`${navButton} ${pathname === "/" ? "bg-[var(--sidebar-active)]" : "bg-[var(--sidebar)]"}`}>
               Home
             </Link>
             <Link href="/liked" className={`${navButton} ${pathname === "/liked" ? "bg-[var(--sidebar-active)]" : "bg-[var(--sidebar)]"}`}>
