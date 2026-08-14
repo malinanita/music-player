@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MusicPlayer from "@/components/MusicPlayer";
 import { PlayerProvider } from "@/context/PlayerProvider"
+import { SearchProvider } from "@/context/SearchProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +31,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <PlayerProvider>
-          {children}
-          <MusicPlayer />
-        </PlayerProvider>
+        <SearchProvider>
+          <PlayerProvider>
+            {children}
+            <MusicPlayer />
+          </PlayerProvider>
+        </SearchProvider>
       </body>
   
     </html>
