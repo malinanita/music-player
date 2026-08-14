@@ -3,6 +3,8 @@
  *
  * - Updates the URL client-side using the Next.js router.
  * - Does NOT fetch data itself.
+ * - Keeps the remembered search term (SearchProvider) in sync so the
+ *   sidebar's Home link can restore these results after navigating away.
  *
  * When submitted:
  * → The URL updates with ?term=value via router.push
@@ -12,7 +14,9 @@
 
 "use client"
 
+import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { useSearch } from "@/context/SearchProvider"
 
 interface SearchBarProps {
   defaultValue?: string
@@ -20,11 +24,23 @@ interface SearchBarProps {
 
 export default function SearchBar({ defaultValue }: SearchBarProps) {
   const router = useRouter()
+  const { setLastTerm } = useSearch()
+
+  /**
+   * Keeps the remembered term truthful to whatever Home is actually
+   * displaying right now — covers browser back/forward and any other
+   * navigation that changes the URL's term without going through
+   * handleSubmit below.
+   */
+  useEffect(() => {
+    setLastTerm(defaultValue ?? "")
+  }, [defaultValue, setLastTerm])
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
     const term = new FormData(e.currentTarget).get("term") as string
+    setLastTerm(term)
     router.push(`/?term=${encodeURIComponent(term)}`)
   }
 
